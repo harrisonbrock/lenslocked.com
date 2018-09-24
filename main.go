@@ -25,9 +25,16 @@ func conact(writer http.ResponseWriter, request *http.Request) {
 
 }
 
+func faq(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(writer, "<h1>FAQ --- Coming Soon</h1>")
+
+}
+
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", home)
 	router.HandleFunc("/contact", conact)
+	router.HandleFunc("/faq", faq)
 	http.ListenAndServe(":3030", router)
 }
