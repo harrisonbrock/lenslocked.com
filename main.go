@@ -31,10 +31,20 @@ func faq(writer http.ResponseWriter, request *http.Request) {
 
 }
 
+func notFound(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "text/html")
+	fmt.Fprint(writer, "<h1>404 NOT FOUND</h1>")
+
+}
+
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", home)
 	router.HandleFunc("/contact", conact)
 	router.HandleFunc("/faq", faq)
+
+	//custom 404
+	var handler http.Handler = http.HandlerFunc(notFound)
+	router.NotFoundHandler = handler
 	http.ListenAndServe(":3030", router)
 }
